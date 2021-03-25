@@ -1,18 +1,23 @@
 <template>
   <div class="view">
     <div class="card" :class="$style.content">
-      <question-loader />
+      <question />
+      <question-loader v-show="false" />
     </div>
   </div>
 </template>
 
 <script>
-import QuestionLoader from '@/components/QuestionLoader'
-export default {
-  components: {
-    QuestionLoader
+  import Question from '@/components/Question'
+  import QuestionLoader from '@/components/QuestionLoader'
+
+  export default {
+    components: {
+      Question,
+      QuestionLoader
+    }
   }
-}
+
 </script>
 
 <style lang="scss" module>

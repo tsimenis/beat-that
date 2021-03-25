@@ -10,25 +10,26 @@
 
 <script>
 
-import { mapState } from 'vuex'
-import Step1 from '@/components/Step1'
-import Step2 from '@/components/Step2'
-import Step3 from '@/components/Step3'
+  import { mapState } from 'vuex'
+  import Step1 from '@/components/Step1'
+  import Step2 from '@/components/Step2'
+  import Step3 from '@/components/Step3'
 
-export default {
-  name: 'Home',
-  components: {
-    Step1,
-    Step2,
-    Step3
-  },
-  computed: {
-    ...mapState(['step']),
-    componentLoader () {
-      return `Step${this.step}`
+  export default {
+    name: 'Home',
+    components: {
+      Step1,
+      Step2,
+      Step3
+    },
+    computed: {
+      ...mapState(['step']),
+      componentLoader () {
+        return `Step${this.step}`
+      }
     }
   }
-}
+
 </script>
 
 <style lang="scss" module>
