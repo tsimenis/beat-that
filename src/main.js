@@ -3,7 +3,6 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import UButton from '@/components/UButton'
-import '@/assets/scss/main.scss'
 
 Vue.component('u-button', UButton)
 

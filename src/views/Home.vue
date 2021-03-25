@@ -1,6 +1,6 @@
 <template>
-  <div :class="$style.view">
-    <div :class="$style.card">
+  <div class="view">
+    <div class="card">
       <div :class="$style.content">
         <component :is="componentLoader" />
       </div>
@@ -32,20 +32,6 @@ export default {
 </script>
 
 <style lang="scss" module>
-
-  .view {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .card {
-    background-color: $indigo-800;
-    border-radius: $rounded;
-    padding: 2rem;
-    box-shadow: 0px 10px 120px rgba(0, 0, 0, 0.25);
-  }
 
   .content {
     display: flex;

@@ -2,17 +2,17 @@
   <div :class="$style.step3">
     <h2 :class="$style.title">Choose difficulty</h2>
     <p :class="$style.subtitle">I won't tell anyone if you choose easy (or am I?)</p>
-    <div :class="$style.difficultyOptions">
+    <div :class="$style['difficulty-options']">
       <button
         v-for="difficulty in difficulties"
         :key="difficulty"
-        :class="[$style.button, {[$style.isActive]: difficulty === selectedDifficulty}]"
+        :class="[$style.button, {[$style['is-active']]: difficulty === selectedDifficulty}]"
         @click="setDifficulty(difficulty)"
       >
         {{ capitalize(difficulty) }}
       </button>
     </div>
-    <u-button>
+    <u-button @click="startGame" :disabled="!selectedDifficulty">
       Start Game
     </u-button>
   </div>
@@ -31,6 +31,10 @@ export default {
     },
     setDifficulty (difficulty) {
       this.$store.commit('SET_DIFFICULTY', difficulty.toLowerCase())
+    },
+    startGame () {
+      this.$store.dispatch('getQuestions', {})
+      this.$router.push('/questions')
     }
   }
 }
@@ -47,7 +51,7 @@ export default {
   margin-bottom: 4rem;
 }
 
-.difficultyOptions {
+.difficulty-options {
   display: flex;
   margin: 4rem 0;
 }
@@ -73,7 +77,7 @@ export default {
   }
 }
 
-.isActive {
+.is-active {
   background-color: $indigo-300;
   color: $white;
 }

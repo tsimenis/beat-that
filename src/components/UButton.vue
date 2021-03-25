@@ -28,5 +28,9 @@ export default {}
     box-shadow: 0 0 0 rgba(black, .25);
   }
 
+  &:disabled {
+    background-color: $gray-400;
+  }
+
 }
 </style>

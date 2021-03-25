@@ -4,6 +4,8 @@
   </div>
 </template>
 
+<style lang="scss" src="@/assets/scss/main.scss" />
+
 <style module>
 
   #app {

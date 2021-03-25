@@ -4,7 +4,7 @@
     <p :class="$style.subtitle">Just so I know who I am cheering for!</p>
     <form @submit.prevent="handleSubmit">
       <p v-show="hasError" :class="$style.error">Please fill in your name</p>
-      <div :class="$style.inputContainer">
+      <div :class="$style['input-container']">
         <input
           v-model="playerName"
           :class="$style.input"
@@ -54,7 +54,7 @@ export default {
   margin-bottom: 4rem;
 }
 
-.inputContainer {
+.input-container {
   max-width: 75%;
   margin: 0 auto;
 }
