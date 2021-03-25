@@ -1,16 +1,70 @@
 <template>
-  <div :class="$style.component">
-    <h2 :class="$style.title">The term “battery”  to describe an electrical storage device was coined by?</h2>
+  <div v-if="hasActiveQuestion" :class="$style.component">
+    <h2 :class="$style.title" v-html="activeQuestion.question"></h2>
     <div :class="$style.answers">
-      <button :class="$style.button" v-for="i in 4" :key="i">
-        Option {{i}}
+      <button
+        v-for="(answer, i) in answers"
+        :key="`answer-${i}`"
+        :class="[
+          $style.button,
+          buttonClasses(answer)
+        ]"
+        v-html="answer"
+        @click="handleSubmitAnswer(answer)"
+      >
       </button>
     </div>
   </div>
 </template>
 
 <script>
+    /* eslint-disable camelcase */
+  import { mapState, mapGetters } from 'vuex'
+
+  const shuffleArray = (array) =>
+    array.sort(() => Math.random() - 0.5)
+
+  const sortBooleanArray = (array) =>
+    array.sort((value) => value === 'True' ? -1 : 1)
+
   export default {
+    data () {
+      return {
+        showResults: false,
+        playerAnswer: ''
+      }
+    },
+    computed: {
+      ...mapState(['activeQuestionIndex']),
+      ...mapGetters(['activeQuestion']),
+      hasActiveQuestion () {
+        return Object.keys(this.activeQuestion).length !== 0
+      },
+      answers () {
+        if (!this.hasActiveQuestion) return []
+        const { correct_answer, incorrect_answers } = this.activeQuestion
+        const answersArray = [correct_answer, ...incorrect_answers]
+        // For boolean questions alwasy return True/False
+        if (this.activeQuestion.type === 'boolean') return sortBooleanArray(answersArray)
+        // For mutliple shuffle
+        return shuffleArray(answersArray)
+      }
+    },
+    methods: {
+      handleSubmitAnswer (answer) {
+        if (this.playerAnswer !== '') return false
+        this.playerAnswer = answer
+        const result = this.playerAnswer === this.activeQuestion.correct_answer ? 'correct' : 'incorrect'
+        this.$store.commit('UPDATE_PLAYER_PROGRESS', { result: result })
+      },
+      buttonClasses (answer) {
+        if (!this.playerAnswer) return ''
+        return {
+          [this.$style.correct]: answer === this.activeQuestion.correct_answer,
+          [this.$style.incorrect]: answer === this.playerAnswer && answer !== this.activeQuestion.correct_answer
+        }
+      }
+    }
   }
 </script>
 
@@ -51,6 +105,16 @@
     &:active {
       box-shadow: 0 0 0 rgba(black, .25);
     }
+  }
+
+  .correct {
+    background-color: $green-500;
+    color: $white;
+  }
+
+  .incorrect {
+    background-color: $red-500;
+    color: $white;
   }
 
 </style>

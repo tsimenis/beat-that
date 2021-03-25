@@ -19,7 +19,15 @@ export default new Vuex.Store({
       'hard'
     ],
     selectedDifficulty: null,
-    questions: []
+    questions: [],
+    activeQuestionIndex: 0,
+    roundStarted: false,
+    playerProgress: [],
+    roundTime: {
+      easy: 15,
+      medium: 10,
+      hard: 5
+    }
   },
   mutations: {
     SET_STEP (state, num) {
@@ -33,6 +41,23 @@ export default new Vuex.Store({
     },
     SET_QUESTIONS (state, data) {
       state.questions = data
+    },
+    SET_ACTIVE_QUESTION_INDEX (state, num) {
+      state.activeQuestionIndex = num
+    },
+    SET_ROUND_STARTED (state, value) {
+      state.roundStarted = value
+    },
+    UPDATE_PLAYER_PROGRESS (state, data) {
+      state.playerProgress.push(data)
+    }
+  },
+  getters: {
+    numOfQuestions (state) {
+      return state.questions.length
+    },
+    activeQuestion (state) {
+      return state.questions[state.activeQuestionIndex] || {}
     }
   },
   actions: {

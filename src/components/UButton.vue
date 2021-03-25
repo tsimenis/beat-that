@@ -9,8 +9,8 @@
     props: {
       size: {
         type: String,
-        default: 'button-normal',
-        validator: (val) => ['button-normal', 'button-large'].includes(val)
+        default: 'normal',
+        validator: (val) => ['normal', 'large'].includes(val)
       }
     }
   }

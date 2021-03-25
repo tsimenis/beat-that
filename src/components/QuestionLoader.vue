@@ -41,6 +41,7 @@
             this.countdown -= 1
           } else {
             clearInterval(this.intervalId)
+            this.$store.commit('SET_ROUND_STARTED', true)
           }
         }, 1000)
       }
