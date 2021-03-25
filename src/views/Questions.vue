@@ -1,9 +1,16 @@
 <template>
   <div class="view">
     <div class="card" :class="$style.content">
-      <question />
+      <p>Question 1 / 10</p>
+      <question v-show="true" />
       <question-loader v-show="false" />
     </div>
+    <u-button
+      :class="$style['button-next']"
+      size="large"
+    >
+      Skip Question
+    </u-button>
   </div>
 </template>
 
@@ -25,7 +32,16 @@
   .content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    min-height: 75vmin;
+
+    @include screen(xxlarge) {
+      min-height: 60vmin;
+    }
+
+  }
+
+  .button-next {
+    margin-top: 1rem;
   }
 
 </style>
