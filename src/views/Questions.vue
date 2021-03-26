@@ -54,12 +54,6 @@
   .content {
     display: flex;
     flex-direction: column;
-    min-height: 75vmin;
-
-    @include screen(xxlarge) {
-      min-height: 60vmin;
-    }
-
   }
 
   .button-next {

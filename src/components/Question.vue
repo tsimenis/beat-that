@@ -87,13 +87,19 @@
   }
 
   .title {
-    font-size: 2.5rem;
+    font-size: 2rem;
     padding: 1rem 0 3rem 0;
+
+    @include screen(medium) {
+      font-size: 2.5rem;
+    }
+
   }
 
   .answers {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 1fr;
     grid-gap: 1rem;
   }
 
@@ -104,7 +110,8 @@
     color: $gray-800;
     background-color: $white;
     border: 0;
-    padding: 2rem 2rem;
+    padding: 1rem;
+    min-height: 4rem;
     border-radius: $rounded-sm;
     outline: none;
     box-shadow: 0 4px 15px rgba(black, .25);
@@ -114,6 +121,11 @@
     &:active {
       box-shadow: 0 0 0 rgba(black, .25);
     }
+
+    @include screen(medium) {
+      padding: 2rem;
+    }
+
   }
 
   .correct {

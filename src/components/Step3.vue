@@ -12,7 +12,11 @@
         {{ capitalize(difficulty) }}
       </button>
     </div>
-    <u-button @click="startGame" :disabled="!selectedDifficulty">
+    <u-button
+      :class="$style['start-button']"
+      :disabled="!selectedDifficulty"
+      @click="startGame"
+    >
       Start Game
     </u-button>
   </div>
@@ -53,9 +57,14 @@
 
   .difficulty-options {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;
     grid-gap: 1rem;
     margin: 4rem 0;
+
+    @include screen(medium) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
   }
 
   .button {
@@ -80,6 +89,13 @@
   .is-active {
     background-color: $indigo-300;
     color: $white;
+  }
+
+  .start-button {
+    width: 100%;
+    @include screen(medium) {
+      width: auto;
+    }
   }
 
 </style>

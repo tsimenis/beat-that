@@ -40,8 +40,12 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    width: 75%;
     margin: 0 auto;
+
+    @include screen(medium) {
+      width: 75%;
+    }
+
   }
 
 </style>

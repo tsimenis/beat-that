@@ -12,7 +12,7 @@
           placeholder="Name"
         />
       </div>
-      <u-button>
+      <u-button :class="$style['form-button']">
         Next
       </u-button>
     </form>
@@ -59,18 +59,28 @@
   }
 
   .input-container {
-    max-width: 75%;
-    margin: 0 auto;
+    @include screen(medium) {
+      max-width: 75%;
+      margin: 0 auto;
+    }
+
   }
 
   .input {
     width: 100%;
     height: 4rem;
     padding: 0 2rem;
-    border-radius: $rounded;
+    border-radius: $rounded-sm;
     border: 0;
     outline: none;
     margin-bottom: 2rem;
+  }
+
+  .form-button {
+    width: 100%;
+    @include screen(medium) {
+      width: auto;
+    }
   }
 
 </style>
