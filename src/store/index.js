@@ -18,7 +18,7 @@ const getDefaultState = () => {
       'medium',
       'hard'
     ],
-    selectedDifficulty: null,
+    selectedDifficulty: 'easy',
     questions: [],
     loadingQuestions: false,
     activeQuestionIndex: 0,
@@ -30,7 +30,7 @@ const getDefaultState = () => {
       medium: 10,
       hard: 5
     },
-    roundTimer: false
+    roundTimer: true
   }
 }
 
