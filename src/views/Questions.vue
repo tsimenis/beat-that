@@ -6,7 +6,7 @@
     Failed creating new game, <br/> please try again :(
   </message>
   <div v-else class="view">
-    <question-timer />
+    <question-timer v-if="roundTimer" />
     <div class="card" :class="$style.content">
       <current-question-display />
       <question-loader v-if="!roundStarted && showQuestionLoader" />
@@ -44,7 +44,8 @@
         'activeQuestionIndex',
         'playerProgress',
         'roundStarted',
-        'showQuestionLoader'
+        'showQuestionLoader',
+        'roundTimer'
       ]),
       ...mapGetters(['numOfQuestions', 'activeQuestionSubmitted', 'gameFinished']),
       buttonLabel () {

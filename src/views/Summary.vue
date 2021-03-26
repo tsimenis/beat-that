@@ -12,13 +12,13 @@
           </h3>
         </div>
         <ul :class="$style.statistics">
-          <li v-if="statistics.correct > 0">
+          <li v-if="roundTimer && statistics.correct > 0">
             <p>Your fastest response time was <span>{{ statistics.fastest / 1000 }}s</span> 🐇</p>
           </li>
-          <li v-if="statistics.correct > 1">
+          <li v-if="roundTimer && statistics.correct > 1">
             <p>Your slowest response time was <span>{{ statistics.slowest / 1000 }}s</span> 🐌</p>
           </li>
-          <li v-if="statistics.timedOut">
+          <li v-if="roundTimer && statistics.timedOut">
             <p>
               You ran out of time in <span>{{ statistics.timedOut }}</span> {{pluralize('question', statistics.timedOut)}} ⏱️
             </p>
@@ -43,7 +43,7 @@
 
   export default {
     computed: {
-      ...mapState(['name', 'playerProgress']),
+      ...mapState(['name', 'playerProgress', 'roundTimer']),
       ...mapGetters(['numOfQuestions', 'gameFinished']),
       statistics () {
         const getResultLength = (value) =>

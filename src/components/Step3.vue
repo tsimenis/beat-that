@@ -19,6 +19,13 @@
       :options="[{ value: true, label: 'Yes' }, { value: false, label: 'No' }]"
       @change="setQuestionLoader"
     />
+    <h3>Game mode</h3>
+    <URadioGroup
+      name="roundtimer"
+      :value="roundTimer"
+      :options="[{ value: true, label: 'Time attack' }, { value: false, label: 'Lazy' }]"
+      @change="setRoundTimer"
+    />
     <u-button
       :class="$style['start-button']"
       :disabled="!selectedDifficulty"
@@ -38,7 +45,7 @@
       URadioGroup
     },
     computed: {
-      ...mapState(['difficulties', 'selectedDifficulty', 'showQuestionLoader'])
+      ...mapState(['difficulties', 'selectedDifficulty', 'showQuestionLoader', 'roundTimer'])
     },
     methods: {
       capitalize (string) {
@@ -49,6 +56,9 @@
       },
       setQuestionLoader (val) {
         this.$store.commit('SET_QUESTION_LOADER', val)
+      },
+      setRoundTimer (val) {
+        this.$store.commit('SET_ROUND_TIMER', val)
       },
       startGame () {
         this.$store.dispatch('getQuestions', {})
