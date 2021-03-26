@@ -1,5 +1,5 @@
 <template>
-  <div class="view">
+  <div v-if="gameFinished" class="view">
     <div class="card">
       <div :class="$style.content">
         <div>
@@ -44,7 +44,7 @@
   export default {
     computed: {
       ...mapState(['name', 'playerProgress']),
-      ...mapGetters(['numOfQuestions']),
+      ...mapGetters(['numOfQuestions', 'gameFinished']),
       statistics () {
         const getResultLength = (value) =>
           this.playerProgress.filter(entry => entry.result === value).length

@@ -20,6 +20,7 @@ const getDefaultState = () => {
     ],
     selectedDifficulty: null,
     questions: [],
+    loadingQuestions: false,
     activeQuestionIndex: 0,
     showQuestionLoader: false,
     roundStarted: false,
@@ -46,6 +47,9 @@ export default new Vuex.Store({
     },
     SET_QUESTIONS (state, data) {
       state.questions = data
+    },
+    SET_LOADING_QUESTIONS (state, value) {
+      state.loadingQuestions = value
     },
     SET_ACTIVE_QUESTION_INDEX (state, num) {
       state.activeQuestionIndex = num
@@ -76,11 +80,15 @@ export default new Vuex.Store({
     },
     activeQuestionSubmitted (state) {
       return state.playerProgress.length - 1 === state.activeQuestionIndex
+    },
+    gameFinished (state, getters) {
+      return getters.numOfQuestions > 0 && state.playerProgress.length === getters.numOfQuestions
     }
   },
   actions: {
     async getQuestions ({ state, commit }, { num = 10 }) {
       try {
+        commit('SET_LOADING_QUESTIONS', true)
         const { data: { results: questions } } = await this.$axios.get('', {
           params: {
             amount: num,
@@ -88,7 +96,9 @@ export default new Vuex.Store({
           }
         })
         commit('SET_QUESTIONS', questions)
+        commit('SET_LOADING_QUESTIONS', false)
       } catch (e) {
+        commit('SET_LOADING_QUESTIONS', false)
         console.log(e)
       }
     },

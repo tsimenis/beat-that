@@ -1,7 +1,12 @@
 <template>
-  <div v-if="numOfQuestions === 0" :class="$style.loading">
+  <div v-if="loadingQuestions" :class="$style.message">
     <h2>
       Creating new game...
+    </h2>
+  </div>
+  <div v-else-if="!loadingQuestions && numOfQuestions === 0" :class="$style.message">
+    <h2>
+      Failed creating new game, <br/> please try again :(
     </h2>
   </div>
   <div v-else class="view">
@@ -36,7 +41,13 @@
       QuestionTimer
     },
     computed: {
-      ...mapState(['activeQuestionIndex', 'playerProgress', 'roundStarted', 'showQuestionLoader']),
+      ...mapState([
+        'loadingQuestions',
+        'activeQuestionIndex',
+        'playerProgress',
+        'roundStarted',
+        'showQuestionLoader'
+      ]),
       ...mapGetters(['numOfQuestions', 'activeQuestionSubmitted']),
       activeQuestionDisplay () {
         return this.activeQuestionIndex + 1
@@ -56,7 +67,7 @@
 
 <style lang="scss" module>
 
-  .loading {
+  .message {
     flex: 1;
     display: flex;
     justify-content: center;

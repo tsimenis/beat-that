@@ -42,7 +42,7 @@
     },
     computed: {
       ...mapState(['activeQuestionIndex', 'playerProgress', 'showQuestionLoader']),
-      ...mapGetters(['activeQuestion', 'activeQuestionSubmitted', 'numOfQuestions']),
+      ...mapGetters(['activeQuestion', 'activeQuestionSubmitted', 'gameFinished']),
       hasActiveQuestion () {
         return Object.keys(this.activeQuestion).length !== 0
       },
@@ -57,10 +57,8 @@
       }
     },
     watch: {
-      activeQuestionSubmitted () {
-        if (this.activeQuestionIndex + 1 >= this.numOfQuestions) {
-          this.$router.replace('/summary')
-        }
+      gameFinished () {
+        this.$router.replace('/summary')
       }
     },
     methods: {
