@@ -1,8 +1,13 @@
 <template>
-  <div class="view">
+  <div v-if="numOfQuestions === 0" :class="$style.loading">
+    <h2>
+      Creating new game...
+    </h2>
+  </div>
+  <div v-else class="view">
     <question-timer />
     <div class="card" :class="$style.content">
-      <p v-show="numOfQuestions > 0">
+      <p>
         Question {{activeQuestionDisplay}} / {{numOfQuestions}}
       </p>
       <question-loader v-if="!roundStarted && showQuestionLoader" />
@@ -50,6 +55,19 @@
 </script>
 
 <style lang="scss" module>
+
+  .loading {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+
+    @include screen(medium) {
+      font-size: 2rem;
+    }
+
+  }
 
   .content {
     display: flex;
