@@ -16,16 +16,19 @@
       }
     },
     created () {
-      this.remainingTime = this.roundDuration * 1000
+      this.remainingTime = this.roundDurationMs
     },
     beforeDestroy () {
-      this.clearInterval(this.intervalId)
+      clearInterval(this.intervalId)
     },
     computed: {
-      ...mapState(['playerProgress', 'activeQuestionIndex', 'roundStarted']),
-      ...mapGetters(['roundDuration']),
+      ...mapState(['roundStarted']),
+      ...mapGetters(['roundDuration', 'activeQuestionSubmitted']),
+      roundDurationMs () {
+        return this.roundDuration * 1000
+      },
       percentage () {
-        return (this.remainingTime / (this.roundDuration * 1000)) * 100
+        return (this.remainingTime / this.roundDurationMs) * 100
       }
     },
     watch: {
@@ -33,12 +36,13 @@
         if (val) {
           this.startCountdown()
         } else {
-          this.remainingTime = this.roundDuration * 1000
+          this.remainingTime = this.roundDurationMs
           clearInterval(this.intervalId)
         }
       },
-      playerProgress (data) {
-        if (data.length - 1 === this.activeQuestionIndex) {
+      activeQuestionSubmitted (val) {
+        if (val) {
+          this.$store.commit('UPDATE_QUESTION_RESPONSE_TIME', this.roundDurationMs - this.remainingTime)
           clearInterval(this.intervalId)
         }
       }
@@ -47,12 +51,12 @@
       startCountdown () {
         this.intervalId = setInterval(() => {
           if (this.remainingTime > 0) {
-            this.remainingTime -= 100
+            this.remainingTime -= 10
           } else {
             this.$store.commit('UPDATE_PLAYER_PROGRESS', { result: 'time-out' })
             clearInterval(this.intervalId)
           }
-        }, 100)
+        }, 10)
       }
     }
   }
@@ -73,7 +77,6 @@
     display: block;
     height: 100%;
     background-color: $green-400;
-    transition: .1s linear;
   }
 
 </style>

@@ -33,8 +33,15 @@
         playerAnswer: ''
       }
     },
+    mounted () {
+      if (!this.showQuestionLoader) {
+        this.$nextTick(() => {
+          this.$store.commit('SET_ROUND_STARTED', true)
+        })
+      }
+    },
     computed: {
-      ...mapState(['activeQuestionIndex', 'playerProgress']),
+      ...mapState(['activeQuestionIndex', 'playerProgress', 'showQuestionLoader']),
       ...mapGetters(['activeQuestion']),
       hasAnswered () {
         return this.activeQuestionIndex === this.playerProgress.length - 1
