@@ -1,5 +1,12 @@
 # beat-that
 
+## Todo list
+
+- [ ] Tests!
+- [ ] Question enter/leave transition
+- [ ] Option for enabling / disabling Question Loader
+- [ ] Option for time mode / free mode (timer)
+
 ## Project setup
 ```
 npm install
