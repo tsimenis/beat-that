@@ -65,6 +65,9 @@ export default new Vuex.Store({
     },
     RESET_STATE (state) {
       Object.assign(state, getDefaultState())
+    },
+    SET_QUESTION_LOADER (state, value) {
+      state.showQuestionLoader = value
     }
   },
   getters: {
