@@ -8,24 +8,24 @@
             Let's see how you did:
           </h2>
           <h3 :class="$style.subtitle">
-            You got 7/10 questions right! 🎉 👏
+            You got {{ statistics.correct }} / {{ numOfQuestions }} questions right! 🎉 👏
           </h3>
         </div>
         <ul :class="$style.statistics">
           <li>
-            <p>Your fastest response time was <span>0.35s</span> 🐇</p>
+            <p>Your fastest response time was <span>{{ statistics.fastest / 1000 }}s</span> 🐇</p>
           </li>
           <li>
-            <p>Your slowest response time was <span>5.5s</span> 🐌</p>
+            <p>Your slowest response time was <span>{{ statistics.slowest / 1000 }}s</span> 🐌</p>
           </li>
-          <li>
+          <li v-if="statistics.timedOut">
             <p>
-              You ran out of time in <span>2</span> questions ⏱️
+              You ran out of time in <span>{{ statistics.timedOut }}</span> {{pluralize('question', statistics.timedOut)}} ⏱️
             </p>
           </li>
-          <li>
+          <li v-if="statistics.skipped">
             <p>
-              You skipped <span>3</span> questions ⏭️
+              You skipped <span>{{ statistics.skipped }}</span> {{pluralize('question', statistics.skipped)}} ⏭️
             </p>
           </li>
         </ul>
@@ -39,14 +39,37 @@
 
 <script>
 
-  import { mapState } from 'vuex'
+  import { mapState, mapGetters } from 'vuex'
 
   export default {
-    name: 'Home',
     computed: {
-      ...mapState(['name'])
+      ...mapState(['name', 'playerProgress']),
+      ...mapGetters(['numOfQuestions']),
+      statistics () {
+        const getResultLength = (value) =>
+          this.playerProgress.filter(entry => entry.result === value).length
+
+        const correct = getResultLength('correct')
+        const timedOut = getResultLength('time-out')
+        const skipped = getResultLength('skipped')
+
+        const correctTimes = this.playerProgress.filter(entry => entry.result === 'correct').map(correct => correct.time)
+        const fastest = correctTimes.reduce((acc, curr) => curr < acc ? curr : acc)
+        const slowest = correctTimes.reduce((acc, curr) => curr > acc ? curr : acc)
+
+        return {
+          correct,
+          timedOut,
+          skipped,
+          fastest,
+          slowest
+        }
+      }
     },
     methods: {
+      pluralize (word, length) {
+        return length > 1 ? `${word}s` : word
+      },
       playAgain () {
         this.$store.commit('RESET_STATE')
         this.$router.replace('/')

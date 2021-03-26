@@ -42,10 +42,7 @@
     },
     computed: {
       ...mapState(['activeQuestionIndex', 'playerProgress', 'showQuestionLoader']),
-      ...mapGetters(['activeQuestion']),
-      hasAnswered () {
-        return this.activeQuestionIndex === this.playerProgress.length - 1
-      },
+      ...mapGetters(['activeQuestion', 'activeQuestionSubmitted', 'numOfQuestions']),
       hasActiveQuestion () {
         return Object.keys(this.activeQuestion).length !== 0
       },
@@ -59,6 +56,13 @@
         return shuffleArray(answersArray)
       }
     },
+    watch: {
+      activeQuestionSubmitted () {
+        if (this.activeQuestionIndex + 1 >= this.numOfQuestions) {
+          this.$router.replace('/summary')
+        }
+      }
+    },
     methods: {
       handleSubmitAnswer (answer) {
         if (this.playerAnswer !== '') return false
@@ -67,7 +71,7 @@
         this.$store.commit('UPDATE_PLAYER_PROGRESS', { result: result })
       },
       buttonClasses (answer) {
-        if (!this.hasAnswered) return ''
+        if (!this.activeQuestionSubmitted) return ''
         return {
           [this.$style.correct]: answer === this.activeQuestion.correct_answer,
           [this.$style.incorrect]: answer === this.playerAnswer && answer !== this.activeQuestion.correct_answer
