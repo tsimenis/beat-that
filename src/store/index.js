@@ -9,8 +9,8 @@ const instance = axios.create({
 Vue.prototype.$axios = instance
 Vuex.Store.prototype.$axios = instance
 
-export default new Vuex.Store({
-  state: {
+const getDefaultState = () => {
+  return {
     step: 1,
     name: null,
     difficulties: [
@@ -29,7 +29,11 @@ export default new Vuex.Store({
       medium: 10,
       hard: 5
     }
-  },
+  }
+}
+
+export default new Vuex.Store({
+  state: getDefaultState(),
   mutations: {
     SET_STEP (state, num) {
       state.step = num
@@ -54,6 +58,9 @@ export default new Vuex.Store({
     },
     UPDATE_QUESTION_RESPONSE_TIME (state, time) {
       Object.assign(state.playerProgress[state.activeQuestionIndex], { time })
+    },
+    RESET_STATE (state) {
+      Object.assign(state, getDefaultState())
     }
   },
   getters: {

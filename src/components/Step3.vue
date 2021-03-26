@@ -52,12 +52,13 @@
   }
 
   .difficulty-options {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
     margin: 4rem 0;
   }
 
   .button {
-    flex: 1;
     font-family: $font-primary;
     font-weight: 700;
     text-align: center;
@@ -70,7 +71,6 @@
     box-shadow: 0 4px 15px rgba(black, .25);
     transition: box-shadow .25s ease-out;
     cursor: pointer;
-    margin: 0 .5rem;
 
     &:active {
       box-shadow: 0 0 0 rgba(black, .25);

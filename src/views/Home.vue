@@ -35,12 +35,12 @@
 <style lang="scss" module>
 
   .content {
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    max-width: 75%;
-    height: 45vh;
+    width: 75%;
     margin: 0 auto;
   }
 

@@ -54,6 +54,10 @@
     margin-bottom: 4rem;
   }
 
+  .error {
+    margin-bottom: 1rem;
+  }
+
   .input-container {
     max-width: 75%;
     margin: 0 auto;

@@ -87,8 +87,8 @@
   }
 
   .title {
-    padding-top: 1rem;
     font-size: 2.5rem;
+    padding: 1rem 0 3rem 0;
   }
 
   .answers {
