@@ -1,14 +1,10 @@
 <template>
-  <div v-if="loadingQuestions" :class="$style.message">
-    <h2>
-      Creating new game...
-    </h2>
-  </div>
-  <div v-else-if="!loadingQuestions && numOfQuestions === 0" :class="$style.message">
-    <h2>
-      Failed creating new game, <br/> please try again :(
-    </h2>
-  </div>
+  <message v-if="loadingQuestions">
+    Creating new game...
+  </message>
+  <message v-else-if="!loadingQuestions && numOfQuestions === 0">
+    Failed creating new game, <br/> please try again :(
+  </message>
   <div v-else class="view">
     <question-timer />
     <div class="card" :class="$style.content">
@@ -30,12 +26,14 @@
 
 <script>
   import { mapState, mapGetters } from 'vuex'
+  import Message from '@/components/Message'
   import Question from '@/components/Question'
   import QuestionLoader from '@/components/QuestionLoader'
   import QuestionTimer from '@/components/QuestionTimer'
 
   export default {
     components: {
+      Message,
       Question,
       QuestionLoader,
       QuestionTimer
@@ -66,19 +64,6 @@
 </script>
 
 <style lang="scss" module>
-
-  .message {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
-
-    @include screen(medium) {
-      font-size: 2rem;
-    }
-
-  }
 
   .content {
     display: flex;
