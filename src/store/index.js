@@ -103,7 +103,7 @@ export default new Vuex.Store({
       }
     },
     nextQuestion ({ state, getters, commit }) {
-      if (state.activeQuestionIndex + 1 >= getters.numOfQuestions) return false
+      if (state.activeQuestionIndex + 1 > getters.numOfQuestions) return false
       if (!getters.activeQuestionSubmitted) {
         commit('UPDATE_PLAYER_PROGRESS', { result: 'skipped' })
       }

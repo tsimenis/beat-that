@@ -8,9 +8,7 @@
   <div v-else class="view">
     <question-timer />
     <div class="card" :class="$style.content">
-      <p>
-        Question {{activeQuestionDisplay}} / {{numOfQuestions}}
-      </p>
+      <current-question-display />
       <question-loader v-if="!roundStarted && showQuestionLoader" />
       <question v-else :key="activeQuestionIndex" />
     </div>
@@ -27,6 +25,7 @@
 <script>
   import { mapState, mapGetters } from 'vuex'
   import Message from '@/components/Message'
+  import CurrentQuestionDisplay from '@/components/CurrentQuestionDisplay'
   import Question from '@/components/Question'
   import QuestionLoader from '@/components/QuestionLoader'
   import QuestionTimer from '@/components/QuestionTimer'
@@ -34,6 +33,7 @@
   export default {
     components: {
       Message,
+      CurrentQuestionDisplay,
       Question,
       QuestionLoader,
       QuestionTimer
@@ -46,12 +46,14 @@
         'roundStarted',
         'showQuestionLoader'
       ]),
-      ...mapGetters(['numOfQuestions', 'activeQuestionSubmitted']),
-      activeQuestionDisplay () {
-        return this.activeQuestionIndex + 1
-      },
+      ...mapGetters(['numOfQuestions', 'activeQuestionSubmitted', 'gameFinished']),
       buttonLabel () {
         return !this.activeQuestionSubmitted ? 'Skip Question' : 'Next Question'
+      }
+    },
+    watch: {
+      gameFinished () {
+        this.$router.replace('/summary')
       }
     },
     methods: {

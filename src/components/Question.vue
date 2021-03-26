@@ -42,7 +42,7 @@
     },
     computed: {
       ...mapState(['activeQuestionIndex', 'playerProgress', 'showQuestionLoader']),
-      ...mapGetters(['activeQuestion', 'activeQuestionSubmitted', 'gameFinished']),
+      ...mapGetters(['activeQuestion', 'activeQuestionSubmitted']),
       hasActiveQuestion () {
         return Object.keys(this.activeQuestion).length !== 0
       },
@@ -56,11 +56,6 @@
         return shuffleArray(answersArray)
       }
     },
-    watch: {
-      gameFinished () {
-        this.$router.replace('/summary')
-      }
-    },
     methods: {
       handleSubmitAnswer (answer) {
         if (this.playerAnswer !== '') return false
@@ -72,7 +67,8 @@
         if (!this.activeQuestionSubmitted) return ''
         return {
           [this.$style.correct]: answer === this.activeQuestion.correct_answer,
-          [this.$style.incorrect]: answer === this.playerAnswer && answer !== this.activeQuestion.correct_answer
+          [this.$style.incorrect]: answer === this.playerAnswer && answer !== this.activeQuestion.correct_answer,
+          [this.$style.player]: answer === this.playerAnswer
         }
       }
     }
@@ -138,6 +134,10 @@
   .incorrect {
     background-color: $red-500;
     color: $white;
+  }
+
+  .player {
+    box-shadow: inset 0 0 0 5px $white;
   }
 
 </style>

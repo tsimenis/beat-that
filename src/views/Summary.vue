@@ -12,10 +12,10 @@
           </h3>
         </div>
         <ul :class="$style.statistics">
-          <li>
+          <li v-if="statistics.correct > 0">
             <p>Your fastest response time was <span>{{ statistics.fastest / 1000 }}s</span> 🐇</p>
           </li>
-          <li>
+          <li v-if="statistics.correct > 1">
             <p>Your slowest response time was <span>{{ statistics.slowest / 1000 }}s</span> 🐌</p>
           </li>
           <li v-if="statistics.timedOut">
@@ -54,8 +54,8 @@
         const skipped = getResultLength('skipped')
 
         const correctTimes = this.playerProgress.filter(entry => entry.result === 'correct').map(correct => correct.time)
-        const fastest = correctTimes.reduce((acc, curr) => curr < acc ? curr : acc)
-        const slowest = correctTimes.reduce((acc, curr) => curr > acc ? curr : acc)
+        const fastest = correctTimes.reduce((acc, curr) => curr < acc ? curr : acc, correctTimes[0])
+        const slowest = correctTimes.reduce((acc, curr) => curr > acc ? curr : acc, correctTimes[0])
 
         return {
           correct,
