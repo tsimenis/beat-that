@@ -30,13 +30,15 @@
   export default {
     data () {
       return {
-        showResults: false,
         playerAnswer: ''
       }
     },
     computed: {
-      ...mapState(['activeQuestionIndex']),
+      ...mapState(['activeQuestionIndex', 'playerProgress']),
       ...mapGetters(['activeQuestion']),
+      hasAnswered () {
+        return this.activeQuestionIndex === this.playerProgress.length - 1
+      },
       hasActiveQuestion () {
         return Object.keys(this.activeQuestion).length !== 0
       },
@@ -58,7 +60,7 @@
         this.$store.commit('UPDATE_PLAYER_PROGRESS', { result: result })
       },
       buttonClasses (answer) {
-        if (!this.playerAnswer) return ''
+        if (!this.hasAnswered) return ''
         return {
           [this.$style.correct]: answer === this.activeQuestion.correct_answer,
           [this.$style.incorrect]: answer === this.playerAnswer && answer !== this.activeQuestion.correct_answer

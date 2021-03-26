@@ -23,7 +23,7 @@ export default new Vuex.Store({
     activeQuestionIndex: 0,
     roundStarted: false,
     playerProgress: [],
-    roundTime: {
+    roundDurations: {
       easy: 15,
       medium: 10,
       hard: 5
@@ -58,6 +58,10 @@ export default new Vuex.Store({
     },
     activeQuestion (state) {
       return state.questions[state.activeQuestionIndex] || {}
+    },
+    roundDuration (state) {
+      if (!state.selectedDifficulty) return 0
+      return state.roundDurations[state.selectedDifficulty]
     }
   },
   actions: {

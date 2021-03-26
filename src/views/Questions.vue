@@ -1,5 +1,6 @@
 <template>
   <div class="view">
+    <question-timer />
     <div class="card" :class="$style.content">
       <p v-show="numOfQuestions > 0">
         Question {{activeQuestionDisplay}} / {{numOfQuestions}}
@@ -21,11 +22,13 @@
   import { mapState, mapGetters } from 'vuex'
   import Question from '@/components/Question'
   import QuestionLoader from '@/components/QuestionLoader'
+  import QuestionTimer from '@/components/QuestionTimer'
 
   export default {
     components: {
       Question,
-      QuestionLoader
+      QuestionLoader,
+      QuestionTimer
     },
     computed: {
       ...mapState(['activeQuestionIndex', 'playerProgress', 'roundStarted']),
@@ -33,13 +36,19 @@
       activeQuestionDisplay () {
         return this.activeQuestionIndex + 1
       },
+      playerHasNotAnswered () {
+        return this.activeQuestionIndex > this.playerProgress.length - 1
+      },
       buttonLabel () {
-        return this.activeQuestionIndex > this.playerProgress.length - 1 ? 'Skip Question' : 'Next Question'
+        return this.playerHasNotAnswered ? 'Skip Question' : 'Next Question'
       }
     },
     methods: {
       nextQuestion () {
         if (this.activeQuestionIndex + 1 >= this.numOfQuestions) return false
+        if (this.playerHasNotAnswered) {
+          this.$store.commit('UPDATE_PLAYER_PROGRESS', { result: 'skipped' })
+        }
         this.$store.commit('SET_ACTIVE_QUESTION_INDEX', this.activeQuestionIndex + 1)
         this.$store.commit('SET_ROUND_STARTED', false)
       }

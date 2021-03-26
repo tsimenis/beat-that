@@ -29,6 +29,9 @@
     mounted () {
       this.startCountdown()
     },
+    beforeDestroy () {
+      clearInterval(this.intervalId)
+    },
     computed: {
       countdownText () {
         return this.countdown === 0 ? 'GO' : this.countdown
