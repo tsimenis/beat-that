@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Step2 it renders correctly 1`] = `
+<div
+  class="step2"
+>
+  <h2
+    class="title"
+  >
+    First tell me your name
+  </h2>
+   
+  <p
+    class="subtitle"
+  >
+    Just so I know who I am cheering for!
+  </p>
+   
+  <form>
+    <p
+      class="error"
+      style="display: none;"
+    >
+      Please fill in your name
+    </p>
+     
+    <div
+      class="input-container"
+    >
+      <input
+        class="input"
+        placeholder="Name"
+        type="text"
+      />
+    </div>
+     
+    <u-button-stub
+      class="form-button"
+    >
+      
+      Next
+    
+    </u-button-stub>
+  </form>
+</div>
+`;
