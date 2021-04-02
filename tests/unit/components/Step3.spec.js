@@ -2,7 +2,6 @@ import Vuex from 'vuex'
 import { mount, createLocalVue } from '@vue/test-utils'
 import idObj from 'identity-obj-proxy'
 import Step3 from '@/components/Step3.vue'
-// import store from '@/store/index.js'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
@@ -60,4 +59,6 @@ describe('Step3', () => {
 
     expect(mutations.SET_DIFFICULTY).toHaveBeenCalledWith(expect.any(Object), 'medium')
   })
+  // TODO: More tests, also not happy with how the current tests look, would have to split components differently to make
+  // testing easier and "proper"
 })
